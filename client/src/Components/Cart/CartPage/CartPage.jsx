@@ -10,78 +10,126 @@ const CartPage = ({hostLink})=>{
 const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
     return (
-        <div id="content" className="site-content">
-			<div className="site-content-container container">
-				<div id="primary" className="content-area">
-					<main id="main" className="site-main">
-						<div className="page hentry">
-							<header className="entry-header"><h1 className="entry-title">Cart</h1></header>
+      <>
+        <main
+          id="MainContent"
+          class="content-for-layout"
+          role="main"
+          tabindex="-1"
+        >
+          <div
+            id="shopify-section-template--14940997189697__cart-items"
+            class="shopify-section"
+            style={{ background: "white" }}
+          >
+            <script src="/cdn/shop/t/300/assets/cart.js" defer="defer"></script>
+            <link
+              href="/cdn/shop/t/300/assets/cart-items.css"
+              rel="stylesheet"
+              type="text/css"
+              media="all"
+            />
+            <link
+              href="/cdn/shop/t/300/assets/cart-page.css"
+              rel="stylesheet"
+              type="text/css"
+              media="all"
+            />
+            <style data-shopify="">
+              {`
+                .section-template--14940997189697__cart-items-padding {
+                    padding-top: 27px;
+                    padding-bottom: 27px;
+                }
 
-							<div className={`entry-content ${cartItems.length<1 ? "d-flex flex-c align-center" : null}`}>
-
-                                {cartItems.length>0 ? (
-
-								<div className="products">
-									<form className="cart-form" action="#" method="post">
-										<table className="shop_table shop_table_responsive cart cart-form__contents">
-											<thead>
-												<tr>
-													<th className="product-thumbnail">Product</th>
-													<th className="product-name">Name</th>
-													<th className="product-price">Price</th>
-													<th className="product-quantity">Quantity</th>
-													<th className="product-remove">&nbsp;</th>
-												</tr>
-											</thead>
-											<tbody>
-												
-                                            {cartItems.map((item) => (
-                                                    <CartItemRows key={item.id} item={item} hostlink={hostLink}/>
-                                            )
-                                            )}
-
-											</tbody>
-										</table>
-									</form>
-
-									<div className="cart-collaterals">
-										<div className="cart_totals ">
-											<h2>Cart totals</h2>
-
-											<table className="shop_table shop_table_responsive cart-subtotal-table">
-												<tbody>
-													<tr className="cart-subtotal">
-														<th>Subtotal</th>
-														<td data-title="Subtotal">
-															<span className="amount"><span className="currencySymbol">$</span>{totalPrice}</span>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-
-
-											<div className="wc-proceed-to-checkout">
-												<Link to="/checkout" className="checkout-button button alt wc-forward"> Proceed to checkout</Link></div>
-										</div>
-									</div>
-								</div>
-                                ):(
-								<>	
-								<p className="cart-empty d-flex flex-c g1 align-center">
-								<img src="/images/empty-bag.svg" width="150" alt="Cart is empty"/>Your cart is currently empty.</p>
-
-								<p className="return-to-shop"> <Link className="button wc-backward" to="/"> Return to shop </Link></p>
-								</>
-								)
-                                }
-                                
-							</div>
-						</div>
-					</main>
-				</div>
-			</div>
-		</div>
-    )
+                @media screen and (min-width: 750px) {
+                    .section-template--14940997189697__cart-items-padding {
+                        padding-top: 36px;
+                        padding-bottom: 36px;
+                    }
+                }
+				`}
+            </style>
+            <div class="page-width is-empty">
+              {cartItems.length > 0 ? (
+                <>
+                  <div class="title-wrapper-with-link flex jcb flex--mobile">
+                    <h1 class="title title--primary h4">Shopping bag</h1>
+                    <a href="/en-pk/collections/all" class="underlined-link">
+                      Continue shopping
+                    </a>
+                  </div>
+                  <div
+                    class="cart__items"
+                    id="main-cart-items"
+                    data-id="template--14940997189697__cart-items"
+                  >
+                    <div class="js-contents">
+                      <table class="cart-items">
+                        <caption class="visually-hidden">Shopping bag</caption>
+                        <thead>
+                          <tr>
+                            <th
+                              class="caption-with-letter-spacing"
+                              colspan="2"
+                              scope="col"
+                            >
+                              Product
+                            </th>
+                            <th
+                              class="cart-items__heading--wide small-hide caption-with-letter-spacing"
+                              colspan="1"
+                              scope="col"
+                            >
+                              Quantity
+                            </th>
+                            <th
+                              class="small-hide right caption-with-letter-spacing"
+                              colspan="1"
+                              scope="col"
+                            >
+                              Total
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {cartItems.map((item) => (
+                            <CartItemRows
+                              key={item.id}
+                              item={item}
+                              hostlink={hostLink}
+                            />
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div class="cart__warnings">
+                    <h1 class="cart__empty-text h4">Your bag is empty</h1>
+                    <a href="/en-pk/collections/all" class="button">
+                      Continue shopping
+                    </a>
+                    <h2 class="cart__login-title h4">Have an account?</h2>
+                    <p class="cart__login-paragraph">
+                      <a
+                        href="/en-pk/account/login"
+                        class="link underlined-link"
+                      >
+                        Log in
+                      </a>{" "}
+                      to check out faster.
+                    </p>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </main>
+      </>
+    );
 }
 
 export default CartPage;

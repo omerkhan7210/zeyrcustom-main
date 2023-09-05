@@ -9,66 +9,106 @@ const WishlistItem = () => {
   return (
     <>
       {wishlist.length > 0 ? (
-        <table className="shop_table shop_table_responsive wishlist_table">
-		<thead>
-			<tr>
-				<th className="product-thumbnail">Product</th>
-				<th className="product-name">Name</th>
-				<th className="product-price">Price</th>
-				<th className="product-stock-status">Stock status</th>
-				<th className="product-remove">&nbsp;</th>
-			</tr>
-		</thead>
-          <tbody>
-            {wishlist.map((w) => (
-              <tr className="product-item" key={w.id}>
-                <td className="product-thumbnail">
-                  <Link to={`/products/${w.id}`}>
-                    <img
-                      width="150"
-                      height="150"
-                      src={`${hostLink}/uploads/` + w.featuredImage}
-                      className=""
-                      alt={w.name}
-                    />
-                  </Link>
-                </td>
-
-                <td className="product-name" data-title="Product">
-                  <a href="#">{w.name}</a>
-                </td>
-
-                <td className="product-price" data-title="Price">
-                  <span className="amount">
-                    <span className="currencySymbol">$</span>
-                    {w.price}
-                  </span>
-                </td>
-
-                <td className="product-stock-status">In stock</td>
-
-               
-
-                <td className="product-remove">
-                  <a
-                    className="remove"
-                    aria-label="Remove this item"
-                    onClick={() => removeFromWishlist(w.id)}
+        <>
+          {wishlist.map((w) => (
+            <div class="wk-grid__item " key={w.id}>
+              <button
+                class="wk-button wk-button--remove wk-button--floating"
+                title="Remove from Wishlist"
+                onClick={() => removeFromWishlist(w.id)}
+              >
+                <div class="wk-icon wk-button__icon">
+                  <svg
+                    class="wk-icon__svg"
+                    width="100%"
+                    height="100%"
+                    viewBox="0 0 64 64"
+                    version="1.1"
                   >
-                    <span className="svg-icon icon-close size-normal close-icon">
-                      <svg width="24px" height="24px" viewBox="0 0 24 24">
-                        <g>
-                          <rect fill="none" width="24" height="24" />
-                          <polygon points="19.778,5.636 18.364,4.222 12,10.586 5.636,4.222 4.222,5.636 10.586,12 4.222,18.364 5.636,19.778 12,13.414 18.364,19.778 19.778,18.364 13.414,12" />
-                        </g>
-                      </svg>
-                    </span>
-                  </a>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                    <path
+                      vector-effect="non-scaling-stroke"
+                      d="M0.309,0.309a0.9,0.9,0,0,1,1.268,0L63.691,62.423a0.9,0.9,0,0,1-1.268,1.268L0.309,1.577A0.9,0.9,0,0,1,.309.309Z"
+                    ></path>
+                    <path
+                      vector-effect="non-scaling-stroke"
+                      d="M63.691,0.309a0.9,0.9,0,0,1,0,1.268L1.577,63.691A0.9,0.9,0,0,1,.309,62.423L62.423,0.309A0.9,0.9,0,0,1,63.691.309Z"
+                    ></path>
+                  </svg>
+                </div>
+              </button>
+              <Link
+                to={`/products/${w.id}`}
+                class="wk-product-image"
+                title="View product"
+                style={{
+                  backgroundImage: `url(${
+                    hostLink + "/uploads/" + w.featuredImage
+                  })`,
+                }}
+              ></Link>
+              <div class="wk-product-info">
+                <Link class="wk-product-title" to={`/products/${w.id}`}>
+                  {w.name}
+                </Link>
+                <div class="wk-product-price">
+                  <span class="wk-product-price--current">${w.price}</span>
+                </div>
+              </div>
+              <form class="wk-product-form" action="/cart/add" method="post">
+                <div class="wk-product-form__options">
+                  <div class="wk-product-form__option">
+                    <label class="wk-product-form__option__label" for="Option2">
+                      COLOR
+                    </label>
+                    <select
+                      class="wk-product-form__option__select"
+                      name="options[COLOR]"
+                    >
+                      <option
+                        value="Aged Black"
+                        selected="selected"
+                        disabled=""
+                      >
+                        Aged Black
+                      </option>
+                    </select>
+                  </div>
+                  <div class="wk-product-form__option">
+                    <label class="wk-product-form__option__label" for="Option3">
+                      SIZE
+                    </label>
+                    <select
+                      class="wk-product-form__option__select"
+                      name="options[SIZE]"
+                    >
+                      <option value="28" disabled="">
+                        28
+                      </option>
+                      <option value="29" selected="selected">
+                        29
+                      </option>
+                      <option value="30">30</option>
+                      <option value="31">31</option>
+                      <option value="32">32</option>
+                      <option value="33">33</option>
+                      <option value="34">34</option>
+                      <option value="36">36</option>
+                      <option value="38">38</option>
+                      <option value="40">40</option>
+                    </select>
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  class="wk-product-form__submit"
+                  data-wk-add-to-cart="64f5f969efabe032296d3a45"
+                >
+                  Add to Bag
+                </button>
+              </form>
+            </div>
+          ))}
+        </>
       ) : (
         <p>No items in wishlist</p>
       )}

@@ -472,8 +472,7 @@ td {
 }
 
 .dashboard-btn-home a{
-  color:white;
-  text-decoration: none;
+  color: white;
   font-size: 10px;
 }
 
@@ -531,3 +530,23 @@ td {
         width: 100%;
       }
     }
+select {
+  border: unset;
+}
+
+.footer__inner {
+  position: relative;
+}
+
+a {
+  text-decoration: underline;
+}
+
+.cart-item__details {
+  text-align: left;
+}
+
+#shopify-section-footer,
+section {
+  background-color: white;
+}

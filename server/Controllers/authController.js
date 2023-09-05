@@ -59,6 +59,88 @@ async function createTable(query) {
     }
   });
 }
+
+// NEWSLETTER FORM 
+// Handle POST request from your React form
+export const NewsletterForm = async (req, res) => {
+  const { email } = req.body;
+ // Insert user subscription into the database
+  const userData = {
+    email,
+    subscribed_date: new Date(), // Current date
+    subscribed_status: true, // Assuming user is subscribed when signing up
+  };
+
+  const query = `
+  CREATE TABLE IF NOT EXISTS subscribed_users (
+  user_id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(255) NOT NULL,
+  subscribed_date DATETIME NOT NULL,
+  subscribed_status BOOLEAN NOT NULL
+)
+  `
+await createTable(query);
+
+   // Check if the user with the same email already exists
+  pool.query('SELECT * FROM subscribed_users WHERE email = ?', [email], (err, rows) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Database error' });
+    }
+
+    if (rows.length > 0) {
+      // User with the same email already exists
+      return res.status(409).json({ message: 'User with this email already exists' });
+    }
+
+    // User does not exist, proceed to insert the new user
+    const userData = {
+      email,
+      subscribed_date: new Date(), // Current date
+      subscribed_status: true, // Assuming user is subscribed when signing up
+    };
+
+    // Insert the new user
+    pool.query('INSERT INTO subscribed_users SET ?', userData, (insertErr) => {
+      if (insertErr) {
+        console.error(insertErr);
+        return res.status(500).json({ message: 'Error saving user data' });
+      }
+
+      console.log('User data saved to the database');
+
+      res.status(200).json({ message: 'User added and subscription email sent' });
+    });
+  });
+
+
+  const mailOptions = {
+   from: 'omerfarooqkhan7210@gmail.com', // Update with your email
+   to: email,
+   subject: "Thank You",
+   html: "Thank You For Subscribing ZEYR FINERI",
+ };
+
+ // Create a transporter object with your Gmail account details
+const transporter = nodemailer.createTransport({
+service: 'gmail',
+auth: {
+user: 'omerfarooqkhan7210@gmail.com', // Your Gmail email address
+pass: 'eaermqekncdsjnsn', // Your Gmail password or app-specific password
+},
+});
+
+ transporter.sendMail(mailOptions, (error) => {
+   if (error) {
+     console.error(error);
+     return res.status(500).json({ message: 'Failed to send the subscription mail' });
+   }
+
+   res.status(200).json({ message: 'Subscription Email Sent' });
+ });
+ 
+};
+
 // Store the OTP codes for verification
 const otpCodes = {};
 // Route for user signup

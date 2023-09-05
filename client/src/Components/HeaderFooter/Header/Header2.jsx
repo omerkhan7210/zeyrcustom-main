@@ -2279,7 +2279,7 @@ export const Header2 = () => {
         </div>
 
         <h1 className="site-logo flex jcc aic">
-          <Link href="/" className="">
+          <Link to="/">
             <img
               src="cdn/shop/files/logo_be4041d5-a81e-4d1e-a43d-29b0b0d52cbe.png?v=1678302533"
               alt="AMIRI"
@@ -2338,12 +2338,33 @@ export const Header2 = () => {
               </svg>
             </button>
           </div>
+
           <a
-            href="/login"
+            href={` ${isTokenExpired ? "/login" : "/my-zf"}`}
             aria-label="Login/View my account"
-            className="account "
+            className={`account ${
+              isTokenExpired ? null : "account--logged-in"
+            }`}
           >
-            <span>
+            {isTokenExpired ? (
+              <span>
+                <svg
+                  className="icon icon--account-2"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle cx="10" cy="5" r="4" stroke="black"></circle>
+                  <path
+                    d="M19.0247 19.44C19.0247 14.433 14.9562 11.5 9.93818 11.5C4.92014 11.5 0.851074 14.433 0.851074 19.44H19.0247Z"
+                    stroke="#333333"
+                    strokeMiterlimit="10"
+                  ></path>
+                </svg>
+              </span>
+            ) : (
               <svg
                 className="icon icon--account-2"
                 width="20"
@@ -2359,29 +2380,48 @@ export const Header2 = () => {
                   strokeMiterlimit="10"
                 ></path>
               </svg>
-            </span>
+            )}
           </a>
           <Link
             to="/wishlist"
-            className="wk-link wk-link--empty"
+            className={`wk-link ${
+              wishlistItemsCount > 0 ? "wk-link--filled" : "wk-link--empty"
+            } `}
             title="View Wishlist"
             data-appmate=""
           >
             <div className="wk-icon wk-link__icon">
-              <svg
-                className="icon--wishlist"
-                width="15"
-                height="20"
-                viewBox="0 0 15 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6.79776 15.7977L0.527344 19.1641V0.5H13.5273V19.1633L7.27114 15.7979L7.0345 15.6706L6.79776 15.7977Z"
-                  stroke="black"
-                  strokeMiterlimit="10"
-                ></path>
-              </svg>
+              {wishlistItemsCount > 0 ? (
+                <svg
+                  className="icon--wishlist"
+                  width="15"
+                  height="20"
+                  viewBox="0 0 15 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.79776 15.7977L0.527344 19.1641V0.5H13.5273V19.1633L7.27114 15.7979L7.0345 15.6706L6.79776 15.7977Z"
+                    stroke="black"
+                    strokeMiterlimit="10"
+                  ></path>
+                </svg>
+              ) : (
+                <svg
+                  className="icon--wishlist"
+                  width="15"
+                  height="20"
+                  viewBox="0 0 15 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.79776 15.7977L0.527344 19.1641V0.5H13.5273V19.1633L7.27114 15.7979L7.0345 15.6706L6.79776 15.7977Z"
+                    stroke="black"
+                    strokeMiterlimit="10"
+                  ></path>
+                </svg>
+              )}
             </div>
             <span className="wk-link__label">Wishlist</span>
             <span className="wk-link__count">{wishlistItemsCount}</span>

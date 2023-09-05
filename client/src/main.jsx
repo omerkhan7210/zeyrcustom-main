@@ -18,6 +18,7 @@ import "./assets/css/slider.css";
 import "./assets/css/slideshow.css";
 import "./assets/css/variants.css";
 import "./assets/css/video-two.css";
+import "./assets/css/cart-page.css";
 import ErrorBoundary from './Components/ErrorBoundary/ErrorBoundary.jsx';
 import { Provider } from 'react-redux';
 import store from './store.jsx';
